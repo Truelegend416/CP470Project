@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TrackZen</string>
+
+    <string name="account">Account</string>
+    <string name="signIn">Sign In</string>
+    <string name="signIn_info">Click Sign in below to login with GOOGLE</string>
+
+    <string name="signOut">Sign Out</string>
+    <string name="signOut_info">To Sign Out, Please press "Sign Out" below!</string>
+    <string name="welcome">Welcome to TrackZen</string>
+    <string name="intro">Introduction</string>
+    <string name="introParagraph">Hi, Welcome to this wonderful app which will help you break bad habits and keep track
+    of new tasks on a Daily/Weekly/Monthly basis.</string>
+
+    <string name="habitTracker">Habit Tracker</string>
+    <string name="toDo_list">To-Do List</string>
+    <string name="statisticsPage">Statistics Page</string>
+</resources>
