@@ -2,28 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/plane"
+        android:id="@+id/habittracker"
         android:title="One"
         android:icon="@drawable/habittracker"
         android:orderInCategory="101"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/car"
+        android:id="@+id/todotracker"
         android:title="Two"
         android:icon="@drawable/todo"
         android:orderInCategory="100"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/gas"
+        android:id="@+id/statstracker"
         android:title="three"
         android:icon="@drawable/stats"
         android:orderInCategory="102"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/about"
-        android:title="About"
+        android:id="@+id/info"
+        android:title="Information"
         app:showAsAction="never"/>
 </menu>

@@ -15,4 +15,9 @@
     <string name="habitTracker">Habit Tracker</string>
     <string name="toDo_list">To-Do List</string>
     <string name="statisticsPage">Statistics Page</string>
+
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="habitTrackerDialog">Would you like to cancel and continue to next Activity?</string>
+    <string name="custom_dialogtext">Information Regarding This Page</string>
 </resources>
