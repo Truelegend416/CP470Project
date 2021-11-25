@@ -9,9 +9,8 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/todotracker"
-        android:title="Two"
-        android:icon="@drawable/todo"
+        android:id="@+id/home"
+        android:title="Home"
         android:orderInCategory="100"
         app:showAsAction="always"/>
 

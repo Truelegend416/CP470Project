@@ -144,7 +144,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent3);
                 break;
 
-
+            case R.id.signout:
+                Log.d("Toolbar", "Sign out Selected");
+                //need to figure out how to add the signout function here
+                break;
 
 
             case R.id.info:
