@@ -5,22 +5,37 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.snackbar.Snackbar;
 
 public class StatisticsActivity extends AppCompatActivity {
+
+    GoogleSignInAccount acct;
+    ImageView img;
+    Uri personPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        img = (ImageView)findViewById(R.id.photo);
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute();
+        Glide.with(StatisticsActivity.this).load(personPhoto).into(img);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
@@ -93,5 +108,29 @@ public class StatisticsActivity extends AppCompatActivity {
 
         }
         return false;
+    }
+    public class AsyncTaskRunner extends AsyncTask<Void,Void, Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                acct = GoogleSignIn.getLastSignedInAccount(StatisticsActivity.this);
+                if (acct != null) {
+                    String personName = acct.getDisplayName();
+                    personPhoto = acct.getPhotoUrl();
+
+
+
+                    //Glide.with(MainActivity.this).load(personPhoto).into(img);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
     }
 }

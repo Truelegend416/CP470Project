@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -58,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
     private GoogleApiClient googleApiClient;
     private GoogleSignInOptions gso;
     GoogleSignInClient gsic;
+    GoogleSignInAccount acct;
+    ImageView img;
+    Uri personPhoto;
 
 
     @Override
@@ -75,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
                 signOut();
             }
         });
+
+        img = (ImageView)findViewById(R.id.photo);
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute();
+        Glide.with(MainActivity.this).load(personPhoto).into(img);
 
         final Button habitTracker = findViewById(R.id.habitTracker_button);
         habitTracker.setOnClickListener(new View.OnClickListener() {
@@ -197,5 +206,29 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return false;
+    }
+    public class AsyncTaskRunner extends AsyncTask<Void,Void, Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                acct = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+                if (acct != null) {
+                    String personName = acct.getDisplayName();
+                    personPhoto = acct.getPhotoUrl();
+
+
+
+                    //Glide.with(MainActivity.this).load(personPhoto).into(img);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
     }
 }
