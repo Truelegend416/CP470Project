@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/profile_image"
+        android:title="zero"
+        app:actionLayout="@layout/profile"
+        android:orderInCategory="99"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/home"
         android:title="Home"
         android:orderInCategory="101"
@@ -14,12 +20,7 @@
         android:orderInCategory="100"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/statstracker"
-        android:title="three"
-        android:icon="@drawable/stats"
-        android:orderInCategory="102"
-        app:showAsAction="always"/>
+
 
     <item
         android:id="@+id/info"

@@ -21,8 +21,8 @@
     <string name="cancel">Cancel</string>
     <string name="habitTrackerDialog">Would you like to cancel and continue to next Activity?</string>
     <string name="custom_dialogtext">Information Regarding This Page</string>
-    <string name="mainInfo">Authors: Mohammad Bilal Akhtar, Manav Dharnesh Dessai, Ali Mohamed, Sakir, Arsh \n Activity Name: Home Page\nOverview: This page is the Home Page giving you Instructions on how to use the app and what its about</string>
-    <string name="habitInfo">Authors: Mohammad Bilal Akhtar, Manav Dharnesh Dessai, Ali Mohamed, Sakir, Arsh \n Activity Name: Habit Tracker Page\nOverview: This page is about creating habits that you want to track</string>
+    <string name="mainInfo">Activity Name: Home Page\n Overview: This page is the Home Page giving you Instructions on how to use the app and what its about\n Authors: Mohammad Bilal Akhtar, Manav Dharnesh Dessai, Ali Mohamed, Sakir, Arsh</string>
+    <string name="habitInfo">Activity Name: Habit Tracker Page\nOverview: This page is about creating habits that you want to track\n Authors: Mohammad Bilal Akhtar, Manav Dharnesh Dessai, Ali Mohamed, Sakir, Arsh </string>
     <string name="todoInfo">Authors: Mohammad Bilal Akhtar, Manav Dharnesh Dessai, Ali Mohamed, Sakir, Arsh \n Activity Name: ToDo Tracker Page\nOverview: This page is about creating a ToDo list for the upcoming days, weeks, months. Just so you know what to do</string>
     <string name="statsInfo">Authors: Mohammad Bilal Akhtar, Manav Dharnesh Dessai, Ali Mohamed, Sakir, Arsh \n Activity Name: Stats Tracker Page\nOverview: This page gives you an overview of your Habits that are completed and not completed as well as the list of things you have compelted or not</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.cp470groupproject;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 
 
 import android.content.DialogInterface;
@@ -31,16 +32,22 @@ public class HabitTrackerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_tracker);
-        img = (ImageView)findViewById(R.id.photo);
-        AsyncTaskRunner runner = new AsyncTaskRunner();
-        runner.execute();
-        Glide.with(HabitTrackerActivity.this).load(personPhoto).into(img);
+//        img = (ImageView)findViewById(R.id.photo);
+//        AsyncTaskRunner runner = new AsyncTaskRunner();
+//        runner.execute();
+//        Glide.with(HabitTrackerActivity.this).load(personPhoto).into(img);
 
 
     }
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
         getMenuInflater().inflate(R.menu.toolbar_menuhabit, m );
+        MenuItem menuItem = m.findItem(R.id.profile_image);
+        View view = MenuItemCompat.getActionView(menuItem);
+        img = view.findViewById(R.id.photo1);
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute();
+        Glide.with(HabitTrackerActivity.this).load(personPhoto).into(img);
         return true;
     }
 
@@ -64,12 +71,7 @@ public class HabitTrackerActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(HabitTrackerActivity.this, ToDoListActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.statstracker:
-                Log.d("Toolbar", "Stats Selected");
-                Snackbar.make(findViewById(R.id.statstracker), "You selected Stats Tracker option", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Intent intent3 = new Intent(HabitTrackerActivity.this, StatisticsActivity.class);
-                startActivity(intent3);
-                break;
+
 
             case R.id.signout:
                 Log.d("Toolbar", "Sign out Selected");

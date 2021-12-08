@@ -2,6 +2,7 @@ package com.example.cp470groupproject;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,10 +32,10 @@ public class ToDoListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do_list);
 
-        img = (ImageView)findViewById(R.id.photo);
-        AsyncTaskRunner runner = new AsyncTaskRunner();
-        runner.execute();
-        Glide.with(ToDoListActivity.this).load(personPhoto).into(img);
+//        img = (ImageView)findViewById(R.id.photo);
+//        AsyncTaskRunner runner = new AsyncTaskRunner();
+//        runner.execute();
+//        Glide.with(ToDoListActivity.this).load(personPhoto).into(img);
 
     }
 
@@ -45,6 +46,15 @@ public class ToDoListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
         getMenuInflater().inflate(R.menu.toolbar_menutodo, m );
+
+        MenuItem menuItem = m.findItem(R.id.profile_image);
+        View view = MenuItemCompat.getActionView(menuItem);
+
+        img = view.findViewById(R.id.photo1);
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute();
+        Glide.with(ToDoListActivity.this).load(personPhoto).into(img);
+
         return true;
     }
 
@@ -68,12 +78,7 @@ public class ToDoListActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(ToDoListActivity.this, MainActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.statstracker:
-                Log.d("Toolbar", "Stats Selected");
-                Snackbar.make(findViewById(R.id.statstracker), "You selected Stats Tracker option", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Intent intent3 = new Intent(ToDoListActivity.this, StatisticsActivity.class);
-                startActivity(intent3);
-                break;
+
 
             case R.id.signout:
                 Log.d("Toolbar", "Sign out Selected");
