@@ -3,6 +3,7 @@ package com.example.cp470groupproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -58,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     private GoogleApiClient googleApiClient;
     private GoogleSignInOptions gso;
     GoogleSignInClient gsic;
+    GoogleSignInAccount acct;
+    ImageView img;
+    Uri personPhoto;
 
 
     @Override
@@ -75,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
                 signOut();
             }
         });
+
+//        img = (ImageView)findViewById(R.id.photo);
+//        AsyncTaskRunner runner = new AsyncTaskRunner();
+//        runner.execute();
+//        Glide.with(MainActivity.this).load(personPhoto).into(img);
 
         final Button habitTracker = findViewById(R.id.habitTracker_button);
         habitTracker.setOnClickListener(new View.OnClickListener() {
@@ -94,14 +104,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button statisticsButton = findViewById(R.id.statistics_button);
-        statisticsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +132,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
         getMenuInflater().inflate(R.menu.toolbar_menu, m );
+
+        MenuItem menuItem = m.findItem(R.id.profile_image);
+        View view = MenuItemCompat.getActionView(menuItem);
+
+        img = view.findViewById(R.id.photo1);
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute();
+        Glide.with(MainActivity.this).load(personPhoto).into(img);
+
         return true;
     }
 
@@ -152,17 +164,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(MainActivity.this, ToDoListActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.statstracker:
-                Log.d("Toolbar", "Stats Selected");
-                Snackbar.make(findViewById(R.id.statstracker), "You selected Stats Tracker option", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Intent intent3 = new Intent(MainActivity.this, StatisticsActivity.class);
-                startActivity(intent3);
-                break;
 
-            case R.id.signout:
-                Log.d("Toolbar", "Sign out Selected");
-                //need to figure out how to add the signout function here
-                break;
+
 
 
             case R.id.info:
@@ -197,5 +200,29 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return false;
+    }
+    public class AsyncTaskRunner extends AsyncTask<Void,Void, Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                acct = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+                if (acct != null) {
+                    String personName = acct.getDisplayName();
+                    personPhoto = acct.getPhotoUrl();
+
+
+
+                    //Glide.with(MainActivity.this).load(personPhoto).into(img);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
     }
 }
