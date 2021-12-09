@@ -10,6 +10,7 @@
     <item
         android:id="@+id/home"
         android:title="Home"
+        android:icon="@drawable/home"
         android:orderInCategory="101"
         app:showAsAction="always"/>
 
@@ -26,8 +27,5 @@
         android:id="@+id/info"
         android:title="Information"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/signout"
-        android:title="Sign Out"
-        app:showAsAction="never"/>
+
 </menu>
