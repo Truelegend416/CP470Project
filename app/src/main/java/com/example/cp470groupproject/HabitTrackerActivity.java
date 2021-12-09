@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class HabitTrackerActivity extends AppCompatActivity {
 
+
     GoogleSignInAccount acct;
     ImageView img;
     Uri personPhoto;
