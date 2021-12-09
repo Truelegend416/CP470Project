@@ -1,54 +1,173 @@
 package com.example.cp470groupproject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.FragmentContainer;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Activity;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.example.cp470groupproject.Adapter.ToDoAdapter;
+import com.example.cp470groupproject.Model.ToDoModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HabitTrackerActivity extends AppCompatActivity {
+    ArrayList<String> habitList;
+    Cursor cursor;
+    SQLiteDatabase db;
+    FragmentContainerView fragCon;
+    Habit currHabit;
+    ListView habits;
+    String ACTIVITY_NAME = "HabitTrackerActivity";
+    FloatingActionButton Fab;
+    private ArrayList<Habit> List_T;
+    private Query query;
+    private ListenerRegistration listenerRegistration;
+    private FirebaseFirestore firestore;
+    private HabitAdapter adapter;
 
-
-    GoogleSignInAccount acct;
-    ImageView img;
-    Uri personPhoto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_tracker);
-//        img = (ImageView)findViewById(R.id.photo);
-//        AsyncTaskRunner runner = new AsyncTaskRunner();
-//        runner.execute();
-//        Glide.with(HabitTrackerActivity.this).load(personPhoto).into(img);
+        Fab = findViewById(R.id.floatingActionButton);
+        habits = findViewById(R.id.Habits);
+        habitList = new ArrayList<String>();
+        habitList.clear();
+        HabitAdapter habitad = new HabitAdapter(this);
+        habits.setAdapter(habitad);
+        firestore = FirebaseFirestore.getInstance();
+        fragCon = findViewById(R.id.fragmentContainerView);
+        FragmentManager fragment = getSupportFragmentManager();
+        AddHabit fragment2 = new AddHabit();
+
+        //fragment.beginTransaction().add(R.id.fragmentContainerView, fragment2).commit();
+        fragCon.setVisibility(View.INVISIBLE);
+
+        List_T = new ArrayList<>();
+
+        //adapter = new HabitAdapter(HabitTrackerActivity.this);
+        //new HabitAdapter(HabitTrackerActivity.this , List_T);
+        //Data();
+
+
+        HabitDatabase databaseHelper = new HabitDatabase(this);
+        db = databaseHelper.getWritableDatabase();
+
+
+        cursor = db.rawQuery("SELECT * FROM " + HabitDatabase.TABLE_NAME, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            habitList.add(cursor.getString(cursor.getColumnIndexOrThrow(HabitDatabase.KEY_MESSAGE)));
+            Log.i(ACTIVITY_NAME, "SQL MESSAGE:" + cursor.getString(cursor.getColumnIndexOrThrow(HabitDatabase.KEY_MESSAGE)));
+            Log.i(ACTIVITY_NAME, "Cursor’s  column count =" + cursor.getColumnCount());
+            cursor.moveToNext();
+        }
+
+        // Print column names
+        for (int i = 0; i < cursor.getCount(); i++) {
+            String column = cursor.getColumnName(0);
+            System.out.println(column);
+        }
+
+
+
+        Fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragCon.setVisibility(View.VISIBLE);
+                FragmentManager fragment = getSupportFragmentManager();
+                AddHabit fragment2 = new AddHabit(currHabit);
+
+                fragment.beginTransaction().add(R.id.fragmentContainerView, fragment2).commit();
+
+                //if (currHabit!=null){
+
+
+
+
+                //fragCon.setVisibility(View.INVISIBLE);
+
+
+                //ContentValues values = new ContentValues();
+                //values.put(HabitDatabase.KEY_MESSAGE, currHabit.getTitle());
+                //db.insert(HabitDatabase.TABLE_NAME, null, values);
+
+
+
+            }
+        });
+
 
 
     }
+    /*
+    private void Data(){
+        query = firestore.collection("habit").orderBy("time", Query.Direction.DESCENDING);
+
+        listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                for (DocumentChange documentChange : value.getDocumentChanges()){
+
+                    if (documentChange.getType() == DocumentChange.Type.ADDED){
+
+                        //String id = documentChange.getDocument().getId();
+                        //ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
+                        //List_T.add(toDoModel);
+                        //adapter.notifyDataSetChanged();
+
+                    }
+                }
+
+                listenerRegistration.remove();
+
+
+            }
+        });
+        */
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
         getMenuInflater().inflate(R.menu.toolbar_menuhabit, m );
-        MenuItem menuItem = m.findItem(R.id.profile_image);
-        View view = MenuItemCompat.getActionView(menuItem);
-        img = view.findViewById(R.id.photo1);
-        AsyncTaskRunner runner = new AsyncTaskRunner();
-        runner.execute();
-        Glide.with(HabitTrackerActivity.this).load(personPhoto).into(img);
         return true;
     }
 
@@ -72,7 +191,17 @@ public class HabitTrackerActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(HabitTrackerActivity.this, ToDoListActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.statstracker:
+                Log.d("Toolbar", "Stats Selected");
+                Snackbar.make(findViewById(R.id.statstracker), "You selected Stats Tracker option", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent intent3 = new Intent(HabitTrackerActivity.this, StatisticsActivity.class);
+                startActivity(intent3);
+                break;
 
+            case R.id.signout:
+                Log.d("Toolbar", "Sign out Selected");
+                //need to figure out how to add the signout function here
+                break;
 
 
             case R.id.info:
@@ -108,28 +237,41 @@ public class HabitTrackerActivity extends AppCompatActivity {
         }
         return false;
     }
-    public class AsyncTaskRunner extends AsyncTask<Void,Void, Void> {
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try{
-                acct = GoogleSignIn.getLastSignedInAccount(HabitTrackerActivity.this);
-                if (acct != null) {
-                    String personName = acct.getDisplayName();
-                    personPhoto = acct.getPhotoUrl();
-
-
-
-                    //Glide.with(MainActivity.this).load(personPhoto).into(img);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
+        class HabitAdapter extends ArrayAdapter<String> {
+            public HabitAdapter(Context ctx) {
+                super(ctx, 0);
             }
-            return null;
+
+            public int getCount() {
+                return habitList.size();
+            }
+
+            public String getItem(int position) {
+                return habitList.get(position);
+            }
+
+            public View getView(int position, View convertView, ViewGroup parent) {
+                LayoutInflater inflater = HabitTrackerActivity.this.getLayoutInflater();
+                View result = null ;
+                TextView Habit;
+                String text;
+                result = inflater.inflate(R.layout.each_habit,null);
+                text = getItem(position);
+                //Habit.setText(text);
+
+
+
+
+                return result;
+            }
+
+            public long getItemId(int position) {
+                cursor.moveToPosition(position);
+                return Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(HabitDatabase.KEY_ID)));
+
+            }
         }
 
 
-    }
+
 }
