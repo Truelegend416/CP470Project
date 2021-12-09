@@ -39,12 +39,10 @@
 
 
         <TextView
-            android:id="@+id/logintext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/signIn_info"
-            android:textStyle="bold"
             android:textSize="15dp" />
 
         <ImageView

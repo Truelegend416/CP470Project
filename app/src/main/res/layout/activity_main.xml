@@ -23,8 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="30dp" />
 
@@ -35,16 +33,13 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/intro"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+            android:text="@string/intro" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/introParagraph"
-            android:textColor="@color/black"
             tools:layout_editor_absoluteX="17dp"
             tools:layout_editor_absoluteY="207dp" />
 
@@ -62,8 +57,6 @@
         android:textAllCaps="true"
         android:layout_marginBottom="10dp"
         android:text="@string/signOut_info"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/signout_Button"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -78,6 +71,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:text="@string/habitTracker"
+        app:layout_constraintBottom_toTopOf="@+id/statistics_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainLinearLayout"
         tools:ignore="MissingConstraints" />
@@ -93,13 +87,29 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:text="@string/toDo_list"
+        app:layout_constraintBottom_toTopOf="@+id/statistics_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/habitTracker_button"
         app:layout_constraintTop_toBottomOf="@+id/mainLinearLayout"
         tools:ignore="MissingConstraints" />
 
 
-
+    <Button
+        android:id="@+id/statistics_button"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="75dp"
+        android:backgroundTint="@color/brown"
+        android:drawableBottom="@drawable/stats"
+        android:text="@string/statisticsPage"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainLinearLayout"
+        app:layout_constraintVertical_bias="0.64"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/signout_Button"
@@ -110,8 +120,6 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
