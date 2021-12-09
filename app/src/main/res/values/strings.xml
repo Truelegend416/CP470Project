@@ -25,4 +25,10 @@
     <string name="habitInfo">Activity Name: Habit Tracker Page\nOverview: This page is about creating habits that you want to track\n Authors: Mohammad Bilal Akhtar, Manav Dharnesh Dessai, Ali Mohamed, Sakir, Arsh </string>
     <string name="todoInfo">Activity Name: ToDo Tracker Page\nOverview: This page is about creating a ToDo list for the upcoming days, weeks, months. Just so you know what to do. To delete a task, slide it right. To edit a task, slide it left.\nAuthors: Mohammad Bilal Akhtar, Manav Dharnesh Dessai, Ali Mohamed, Sakir, Arsh</string>
     <string name="statsInfo">Activity Name: Stats Tracker Page\nOverview: This page gives you an overview of your Habits that are completed and not completed as well as the list of things you have compelted or not\nAuthors: Mohammad Bilal Akhtar, Manav Dharnesh Dessai, Ali Mohamed, Sakir, Arsh </string>
+    <string name="hello_blank_fragment">Add a Habit</string>
+    <string name="title">Title</string>
+    <string name="desc">Description</string>
+    <string name="rem">Reminder</string>
+    <string name="addHabit">Add Habit</string>
+
 </resources>

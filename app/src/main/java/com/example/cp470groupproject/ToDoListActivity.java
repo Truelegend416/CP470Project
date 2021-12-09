@@ -3,22 +3,29 @@ package com.example.cp470groupproject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.cp470groupproject.Adapter.ToDoAdapter;
 import com.example.cp470groupproject.Model.ToDoModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentChange;
@@ -41,6 +48,9 @@ public class ToDoListActivity extends AppCompatActivity implements OnDialogClose
     private List<ToDoModel> List_T;
     private Query query;
     private ListenerRegistration listenerRegistration;
+    GoogleSignInAccount acct;
+    ImageView img;
+    Uri personPhoto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +113,14 @@ public class ToDoListActivity extends AppCompatActivity implements OnDialogClose
     @Override
     public boolean onCreateOptionsMenu(Menu m) {
         getMenuInflater().inflate(R.menu.toolbar_menutodo, m );
+        MenuItem menuItem = m.findItem(R.id.profile_image);
+        View view = MenuItemCompat.getActionView(menuItem);
+
+        img = view.findViewById(R.id.photo1);
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        runner.execute();
+        Glide.with(ToDoListActivity.this).load(personPhoto).into(img);
+
         return true;
     }
 
@@ -126,17 +144,7 @@ public class ToDoListActivity extends AppCompatActivity implements OnDialogClose
                 Intent intent2 = new Intent(ToDoListActivity.this, MainActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.statstracker:
-                Log.d("Toolbar", "Stats Selected");
-                Snackbar.make(findViewById(R.id.statstracker), "You selected Stats Tracker option", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Intent intent3 = new Intent(ToDoListActivity.this, StatisticsActivity.class);
-                startActivity(intent3);
-                break;
 
-            case R.id.signout:
-                Log.d("Toolbar", "Sign out Selected");
-                //need to figure out how to add the signout function here
-                break;
 
 
             case R.id.info:
@@ -180,6 +188,30 @@ public class ToDoListActivity extends AppCompatActivity implements OnDialogClose
         List_T.clear();
         Data();
         adapter.notifyDataSetChanged();
+
+    }
+    public class AsyncTaskRunner extends AsyncTask<Void,Void, Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                acct = GoogleSignIn.getLastSignedInAccount(ToDoListActivity.this);
+                if (acct != null) {
+                    String personName = acct.getDisplayName();
+                    personPhoto = acct.getPhotoUrl();
+
+
+
+                    //Glide.with(MainActivity.this).load(personPhoto).into(img);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
 
     }
 }
